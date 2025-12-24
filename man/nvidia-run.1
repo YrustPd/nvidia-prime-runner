@@ -1,0 +1,96 @@
+.TH NVIDIA-RUN 1 "2024-12-24" "nvidia-prime-runner" "User Commands"
+.SH NAME
+nvidia-run \- run a command with NVIDIA PRIME offload
+.SH SYNOPSIS
+.B nvidia-run
+[\-\-verbose] [\-\-dry-run] [\-\-no-banner] [command|file] [args...]
+.br
+.B nvidia-run
+run <command|file> [args...]
+.br
+.B nvidia-run
+shell
+.br
+.B nvidia-run
+verify
+.br
+.B nvidia-run
+help | \-\-help
+.br
+.B nvidia-run
+version | \-\-version
+.SH DESCRIPTION
+The
+.B nvidia-run
+command starts a single process or interactive shell with PRIME offload
+environment variables set. It does not change the GPU used by the rest of the
+desktop session.
+.SH SUBCOMMANDS
+.TP
+.B help
+Show usage information.
+.TP
+.B version
+Show the version string.
+.TP
+.B run
+Run a command or file with PRIME offload enabled.
+.TP
+.B shell
+Start an interactive shell with PRIME offload enabled.
+.TP
+.B verify
+Print instructions for verifying renderer output.
+.SH OPTIONS
+.TP
+.B \-\-dry-run
+Print the environment variables and command that would be executed, then exit.
+.TP
+.B \-\-verbose
+Print environment variables and execution details.
+.TP
+.B \-\-no-banner
+Shell mode only. Suppress the banner printed by the .bashrc hook.
+.SH ENVIRONMENT
+.TP
+.B DRI_PRIME
+Set to
+.I 1
+to request PRIME offload for the launched process.
+.TP
+.B __NV_PRIME_RENDER_OFFLOAD
+Set to
+.I 1
+to enable NVIDIA PRIME render offload for GLX/EGL clients.
+.TP
+.B __GLX_VENDOR_LIBRARY_NAME
+Set to
+.I nvidia
+to select the NVIDIA GLX vendor library.
+.TP
+.B NVIDIA_SHELL
+Set to
+.I 1
+for shell mode so the .bashrc hook can apply the banner and env exports.
+.TP
+.B NVIDIA_NO_BANNER
+When set, suppresses the banner printed by the .bashrc hook.
+.SH EXAMPLES
+.TP
+nvidia-run run firefox-esr
+.TP
+nvidia-run ./app.AppImage
+.TP
+nvidia-run shell --no-banner
+.TP
+nvidia-run verify
+.SH EXIT STATUS
+.TP
+.B 0
+Success.
+.TP
+.B 2
+Usage or argument error.
+.TP
+.B 127
+Command not found.

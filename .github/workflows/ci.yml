@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Shellcheck scripts
+        run: |
+          shellcheck bin/nvidia-run scripts/install.sh scripts/uninstall.sh tests/*.sh
+
+      - name: Ensure scripts are executable
+        run: |
+          chmod +x bin/nvidia-run scripts/install.sh scripts/uninstall.sh tests/run-tests.sh tests/*.sh
+
+      - name: Run tests
+        run: |
+          ./tests/run-tests.sh
